@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Farmers{% endblock %}
+{% block page_title %}Farmers{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-xl shadow max-w-6xl mx-auto">
+
+    <h2 class="text-2xl font-bold mb-6 text-center">Farmers</h2>
+
+    <table class="w-full border border-gray-200 rounded-lg overflow-hidden text-center">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="p-3">Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Joined</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for f in farmers %}
+            <tr class="border-t hover:bg-gray-50">
+
+                <td class="p-3 font-medium">{{ f.name }}</td>
+                <td>{{ f.email }}</td>
+
+                <!-- STATUS BADGE -->
+                <td>
+                    <span class="px-3 py-1 rounded-full text-sm font-semibold
+                        {% if f.status == 'active' %}
+                            bg-green-100 text-green-700
+                        {% elif f.status == 'pending' %}
+                            bg-yellow-100 text-yellow-700
+                        {% else %}
+                            bg-red-100 text-red-700
+                        {% endif %}">
+                        {{ f.status|title }}
+                    </span>
+                </td>
+
+                <td class="text-sm text-gray-600">
+                    {{ f.created_at.strftime("%d %b %Y") }}
+                </td>
+
+                <!-- ACTIONS -->
+                <td class="space-x-2">
+
+                    {% if f.status == 'pending' %}
+                    <a href="/admin/farmers/approve/{{ f.id }}"
+                        class="inline-block bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm">
+                        Approve
+                    </a>
+                    {% endif %}
+
+                    {% if f.status == 'active' %}
+                    <a href="/admin/farmers/ban/{{ f.id }}"
+                        class="inline-block bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">
+                        Ban
+                    </a>
+                    {% elif f.status == 'banned' %}
+                    <a href="/admin/farmers/approve/{{ f.id }}"
+                        class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">
+                        Unban
+                    </a>
+                    {% endif %}
+
+                </td>
+
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="p-6 text-gray-500">
+                    No farmers found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

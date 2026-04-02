@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Orders{% endblock %}
+{% block page_title %}All Orders{% endblock %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-xl shadow max-w-6xl mx-auto">
+
+    <h2 class="text-2xl font-bold mb-6">Orders</h2>
+
+    <table class="w-full border">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="p-3">Order ID</th>
+                <th>Customer</th>
+                <th>Farmer</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Payment</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for o in orders %}
+            <tr class="border-t hover:bg-gray-50">
+                <td class="p-3 text-center">#{{ o.id }}</td>
+                <td class="p-3 text-center">{{ o.customer_name }}</td>
+                <td class="p-3 text-center">{{ o.farmer_name }}</td>
+                <td class="font-semibold text-center text-green-700">₹{{ o.total_amount }}</td>
+                <td class="p-3 text-center">{{ o.status }}</td>
+                <td class="p-3 text-center">{{ o.payment_method }}</td>
+                <td class="p-3 text-center">{{ o.created_at.strftime("%d %b %Y") }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

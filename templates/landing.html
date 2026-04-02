@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AgriDirect – Farm to Customer</title>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+</head>
+
+<body class="bg-white text-gray-800">
+    <header class="bg-green-700 text-white shadow">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+            <!-- LOGO -->
+            <div class="text-2xl font-bold tracking-wide">
+                <a href="/customer/orders">🌾 AgriDirect </a>
+            </div>
+
+            <!-- NAV LINKS -->
+            <nav class="flex items-center space-x-6">
+
+                <!-- ================= FARMER NAV ================= -->
+                {% if session.get("role") == "farmer" %}
+                <a href="/farmer/dashboard"
+                    class="nav-link {% if request.path.startswith('/farmer/dashboard') %}active{% endif %}">
+                    Dashboard
+                </a>
+                <a href="/farmer/products"
+                    class="nav-link {% if request.path.startswith('/farmer/products') %}active{% endif %}">
+                    Products
+                </a>
+                <a href="/farmer/inventory"
+                    class="nav-link {% if request.path.startswith('/farmer/inventory') %}active{% endif %}">
+                    Inventory
+                </a>
+                <a href="/farmer/orders"
+                    class="nav-link {% if request.path.startswith('/farmer/orders') %}active{% endif %}">
+                    Orders
+                </a>
+                <a href="/farmer/transactions"
+                    class="nav-link {% if request.path.startswith('/farmer/transactions') %}active{% endif %}">
+                    Transactions
+                </a>
+                <a href="/complaints"
+                    class="nav-link {% if request.path.startswith('/farmer/complaints') %}active{% endif %}">
+                    Complaints
+                </a>
+                {% endif %}
+
+                <!-- ================= CUSTOMER NAV ================= -->
+                {% if session.get("role") == "customer" %}
+                <a href="/customer/dashboard"
+                    class="nav-link {% if request.path.startswith('/customer/dashboard') %}active{% endif %}">
+                    Dashboard
+                </a>
+
+                <a href="/customer/products"
+                    class="nav-link {% if request.path.startswith('/customer/products') %}active{% endif %}">
+                    Products
+                </a>
+                <a href="/customer/cart"
+                    class="nav-link {% if request.path.startswith('/customer/cart') %}active{% endif %}">
+                    Cart
+                </a>
+                <a href="/customer/orders"
+                    class="nav-link {% if request.path.startswith('/customer/orders') %}active{% endif %}">
+                    My Orders
+                </a>
+                <a href="/complaints"
+                    class="nav-link {% if request.path.startswith('/customer/complaints') %}active{% endif %}">
+                    Complaints
+                </a>
+                {% endif %}
+
+                <!-- ================= ADMIN NAV ================= -->
+                {% if session.get("role") == "admin" %}
+                <a href="/admin/dashboard"
+                    class="nav-link {% if request.path.startswith('/admin/dashboard') %}active{% endif %}">
+                    Dashboard
+                </a>
+                <a href="/admin/farmers"
+                    class="nav-link {% if request.path.startswith('/admin/farmers') %}active{% endif %}">
+                    Farmers
+                </a>
+                <a href="/admin/customers"
+                    class="nav-link {% if request.path.startswith('/admin/customers') %}active{% endif %}">
+                    Customers
+                </a>
+                <a href="/admin/orders"
+                    class="nav-link {% if request.path.startswith('/admin/orders') %}active{% endif %}">
+                    Orders
+                </a>
+                <a href="/admin/transactions"
+                    class="nav-link {% if request.path.startswith('/admin/transactions') %}active{% endif %}">
+                    Transactions
+                </a>
+                <a href="/admin/complaints"
+                    class="nav-link {% if request.path.startswith('/admin/complaints') %}active{% endif %}">
+                    Complaints
+                </a>
+                {% endif %}
+
+            </nav>
+
+            <!-- USER INFO -->
+            <div class="flex items-center space-x-4">
+                <span class="text-sm text-green-100">
+                    {{ session.get("role","").title() }}
+                </span>
+                <a href="/auth/logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm font-semibold">
+                    Logout
+                </a>
+            </div>
+
+        </div>
+    </header>
+    <!-- ================= HERO ================= -->
+    <section class="bg-gradient-to-r from-green-700 to-green-500 text-white">
+        <div class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-10 items-center">
+
+            <div>
+                <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
+                    Fresh From Farms.<br>
+                    <span class="text-yellow-300">Direct to You.</span>
+                </h1>
+
+                <p class="mt-6 text-lg text-green-100">
+                    AgriDirect connects farmers directly with customers —
+                    eliminating middlemen, ensuring fair prices, and delivering freshness.
+                </p>
+
+                <div class="mt-8 flex gap-4">
+                    <a href="/auth/login"
+                        class="bg-white text-green-700 font-semibold px-6 py-3 rounded-lg hover:bg-green-100 transition">
+                        Login
+                    </a>
+
+                    <a href="/auth/register"
+                        class="border border-white text-white font-semibold px-6 py-3 rounded-lg hover:bg-white hover:text-green-700 transition">
+                        Register
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- ================= FEATURES ================= -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <h2 class="text-3xl font-bold text-center mb-12">
+                Why Choose AgriDirect?
+            </h2>
+
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+                    <h3 class="text-xl font-semibold mb-2">🌾 For Farmers</h3>
+                    <p class="text-gray-600">
+                        Sell directly to customers, manage inventory, track orders,
+                        and receive fair payments without intermediaries.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+                    <h3 class="text-xl font-semibold mb-2">🛒 For Customers</h3>
+                    <p class="text-gray-600">
+                        Buy fresh farm produce, compare prices, read reviews,
+                        track orders, and raise complaints easily.
+                    </p>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+                    <h3 class="text-xl font-semibold mb-2">🔐 Trusted Platform</h3>
+                    <p class="text-gray-600">
+                        Admin-verified farmers, secure transactions,
+                        transparent complaints handling, and real-time tracking.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= HOW IT WORKS ================= -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <h2 class="text-3xl font-bold text-center mb-12">
+                How It Works
+            </h2>
+
+            <div class="grid md:grid-cols-4 gap-6 text-center">
+
+                <div>
+                    <div class="text-4xl mb-3">👤</div>
+                    <h4 class="font-semibold">Register</h4>
+                    <p class="text-sm text-gray-600">
+                        Sign up as a farmer or customer
+                    </p>
+                </div>
+
+                <div>
+                    <div class="text-4xl mb-3">📦</div>
+                    <h4 class="font-semibold">List / Browse</h4>
+                    <p class="text-sm text-gray-600">
+                        Farmers list products, customers browse
+                    </p>
+                </div>
+
+                <div>
+                    <div class="text-4xl mb-3">💳</div>
+                    <h4 class="font-semibold">Order & Pay</h4>
+                    <p class="text-sm text-gray-600">
+                        Secure checkout with order tracking
+                    </p>
+                </div>
+
+                <div>
+                    <div class="text-4xl mb-3">🚚</div>
+                    <h4 class="font-semibold">Delivered</h4>
+                    <p class="text-sm text-gray-600">
+                        Fresh produce reaches customers
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="bg-green-700 text-white py-16">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+
+            <h2 class="text-3xl font-bold mb-4">
+                Ready to experience farm-fresh products?
+            </h2>
+
+            <p class="text-green-100 mb-8">
+                Join AgriDirect today and support local farmers.
+            </p>
+
+            <a href="/auth/register"
+                class="bg-white text-green-700 px-8 py-3 rounded-lg font-semibold hover:bg-green-100 transition">
+                Get Started
+            </a>
+
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-gray-900 text-gray-400">
+        <div class="max-w-7xl mx-auto px-6 py-10">
+
+            <!-- TOP -->
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+
+                <!-- BRAND -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-lg font-semibold text-white">
+                        🌾 AgriDirect
+                    </h3>
+                    <p class="text-sm mt-1 max-w-xs">
+                        Connecting farmers directly with customers for fresher produce
+                        and fair pricing.
+                    </p>
+                </div>
+
+                <!-- LINKS -->
+                <div class="flex gap-6 text-sm">
+                    <a href="/" class="hover:text-white transition">Home</a>
+                    <a href="/auth/login" class="hover:text-white transition">Login</a>
+                    <a href="/auth/register" class="hover:text-white transition">Register</a>
+                    <a href="/complaints" class="hover:text-white transition">Support</a>
+                </div>
+
+            </div>
+
+            <!-- DIVIDER -->
+            <div class="border-t border-gray-800 my-6"></div>
+
+            <!-- BOTTOM -->
+            <div class="flex flex-col md:flex-row justify-between items-center text-xs gap-2">
+
+                <p>
+                    © {{ 2025 }} AgriDirect. All rights reserved.
+                </p>
+
+                <p class="text-gray-500">
+                    Built with <span class="text-red-500">♥</span>
+                </p>
+
+            </div>
+
+        </div>
+    </footer>
+
+
+</body>
+
+</html>

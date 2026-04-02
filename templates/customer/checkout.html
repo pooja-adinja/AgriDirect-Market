@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout{% endblock %}
+{% block page_title %}Checkout{% endblock %}
+
+{% block content %}
+
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow">
+
+    <h2 class="text-2xl font-bold mb-6">Order Summary</h2>
+
+    <!-- ITEMS -->
+    <table class="w-full border border-gray-200 rounded mb-6">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="p-3 text-left">Product</th>
+                <th class="p-3">Price</th>
+                <th class="p-3">Qty</th>
+                <th class="p-3">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in items %}
+            <tr class="border-t">
+                <td class="p-3">{{ i.title }}</td>
+                <td class="p-3">₹{{ i.price }}</td>
+                <td class="p-3">{{ i.quantity }}</td>
+                <td class="p-3 font-semibold">₹{{ i.total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- TOTAL -->
+    <div class="text-right text-lg font-semibold mb-6">
+        Grand Total:
+        <span class="text-green-700">
+            ₹{{ "%.2f"|format(grand_total) }}
+        </span>
+    </div>
+
+    <!-- PAYMENT -->
+    <form method="POST" action="/customer/checkout/confirm">
+
+        <h3 class="text-lg font-bold mb-2">Delivery Address</h3>
+        <textarea name="address" required class="w-full border p-2 rounded mb-4"
+            placeholder="Enter delivery address"></textarea>
+
+        <h3 class="text-lg font-bold mb-3">Payment Method</h3>
+
+        <div class="space-y-2 mb-6">
+            <label class="flex items-center gap-2">
+                <input type="radio" name="payment_method" value="cod" checked>
+                Cash on Delivery
+            </label>
+
+            <label class="flex items-center gap-2">
+                <input type="radio" name="payment_method" value="upi">
+                UPI (Dummy)
+            </label>
+
+            <label class="flex items-center gap-2">
+                <input type="radio" name="payment_method" value="card">
+                Card (Dummy)
+            </label>
+        </div>
+
+        <div class="flex justify-between">
+            <a href="/customer/cart" class="text-blue-600 hover:underline">
+                ← Back to Cart
+            </a>
+
+            <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded">
+                Place Order
+            </button>
+        </div>
+
+    </form>
+
+
+</div>
+
+{% endblock %}

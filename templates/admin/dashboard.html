@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+{% block page_title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+
+    <!-- TOTAL USERS -->
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <p class="text-sm text-gray-500">Total Users</p>
+        <h2 class="text-3xl font-bold text-green-700 mt-2">
+            {{ total_users }}
+        </h2>
+    </div>
+
+    <!-- TOTAL ORDERS -->
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <p class="text-sm text-gray-500">Total Orders</p>
+        <h2 class="text-3xl font-bold text-blue-700 mt-2">
+            {{ total_orders }}
+        </h2>
+    </div>
+
+    <!-- PENDING FARMERS -->
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <p class="text-sm text-gray-500">Pending Farmers</p>
+        <h2 class="text-3xl font-bold text-yellow-600 mt-2">
+            {{ pending_farmers }}
+        </h2>
+        <a href="/admin/farmers" class="text-sm text-blue-600 hover:underline mt-2 inline-block">
+            Review farmers →
+        </a>
+    </div>
+
+    <!-- REVENUE -->
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <p class="text-sm text-gray-500">Total Revenue</p>
+        <h2 class="text-3xl font-bold text-green-800 mt-2">
+            ₹{{ revenue }}
+        </h2>
+    </div>
+
+</div>
+
+<!-- QUICK ACTIONS -->
+<div class="bg-white p-6 rounded-xl shadow">
+
+    <h3 class="text-xl font-bold mb-4">Quick Actions</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+        <a href="/admin/farmers" class="block p-4 border rounded-lg hover:bg-gray-50">
+            <p class="font-semibold">Manage Farmers</p>
+            <p class="text-sm text-gray-600">
+                Approve, ban or unban farmers
+            </p>
+        </a>
+
+        <a href="/admin/customers" class="block p-4 border rounded-lg hover:bg-gray-50">
+            <p class="font-semibold">Manage Customers</p>
+            <p class="text-sm text-gray-600">
+                View and control customers
+            </p>
+        </a>
+
+        <a href="/admin/orders" class="block p-4 border rounded-lg hover:bg-gray-50">
+            <p class="font-semibold">Track Orders</p>
+            <p class="text-sm text-gray-600">
+                Monitor all platform orders
+            </p>
+        </a>
+
+        <a href="/admin/transactions" class="block p-4 border rounded-lg hover:bg-gray-50">
+            <p class="font-semibold">Transactions</p>
+            <p class="text-sm text-gray-600">
+                Payment & transaction history
+            </p>
+        </a>
+
+        <a href="/admin/complaints" class="block p-4 border rounded-lg hover:bg-gray-50">
+            <p class="font-semibold">Complaints</p>
+            <p class="text-sm text-gray-600">
+                Handle user complaints
+            </p>
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}

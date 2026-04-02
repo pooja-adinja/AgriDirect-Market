@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Farmer Dashboard{% endblock %}
+{% block page_title %}Manage Transactions{% endblock %}
+
+{% block content %}
+
+<body class="bg-gray-100 p-8">
+
+    <div class="max-w-5xl mx-auto bg-white p-6 rounded-xl shadow">
+        <h2 class="text-2xl font-bold text-green-700 mb-6">Transactions</h2>
+
+        <table class="w-full border">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="p-3">Txn ID</th>
+                    <th>Order</th>
+                    <th>Amount</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in transactions %}
+                <tr class="border-t">
+                    <td class="p-3 text-center">{{ t.id }}</td>
+                    <td class="p-3 text-center">#{{ t.order_no }}</td>
+                    <td class="p-3 text-center">₹{{ t.amount }}</td>
+                    <td class="p-3 text-center">{{ t.payment_method }}</td>
+                    <td class="text-green-600 p-3 text-center  font-semibold">{{ t.status }}</td>
+                    <td class="p-3 text-center">{{ t.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+{% endblock %}

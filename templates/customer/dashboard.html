@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Dashboard{% endblock %}
+{% block page_title %}Customer Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- KPI CARDS -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <p class="text-sm text-gray-500">My Orders</p>
+        <h2 class="text-3xl font-bold text-green-700 mt-2">
+            {{ total_orders }}
+        </h2>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <p class="text-sm text-gray-500">Total Spent</p>
+        <h2 class="text-3xl font-bold text-blue-700 mt-2">
+            ₹{{ total_spent }}
+        </h2>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <p class="text-sm text-gray-500">Cart Items</p>
+        <h2 class="text-3xl font-bold text-yellow-600 mt-2">
+            {{ cart_items }}
+        </h2>
+        <a href="/customer/cart" class="text-sm text-blue-600 hover:underline mt-2 inline-block">
+            View cart →
+        </a>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+        <p class="text-sm text-gray-500">Complaints</p>
+        <h2 class="text-3xl font-bold text-red-600 mt-2">
+            {{ complaints }}
+        </h2>
+        <a href="/complaints" class="text-sm text-blue-600 hover:underline mt-2 inline-block">
+            Raise complaint →
+        </a>
+    </div>
+
+</div>
+
+<!-- QUICK ACTIONS -->
+<div class="bg-white p-6 rounded-xl shadow">
+    <h3 class="text-xl font-bold mb-4">Quick Actions</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+        <a href="/customer/products" class="block p-4 border rounded-lg hover:bg-gray-50">
+            <p class="font-semibold">Browse Products</p>
+            <p class="text-sm text-gray-600">
+                Explore fresh farm products
+            </p>
+        </a>
+
+        <a href="/customer/orders" class="block p-4 border rounded-lg hover:bg-gray-50">
+            <p class="font-semibold">My Orders</p>
+            <p class="text-sm text-gray-600">
+                Track your order status
+            </p>
+        </a>
+
+        <a href="/customer/cart" class="block p-4 border rounded-lg hover:bg-gray-50">
+            <p class="font-semibold">My Cart</p>
+            <p class="text-sm text-gray-600">
+                Checkout your items
+            </p>
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}

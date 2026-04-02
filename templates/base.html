@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}AgriDirect Market{% endblock %}</title>
+    <!-- <script src="https://cdn.tailwindcss.com/3.4.17"></script> -->
+         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- ================= TOP NAVBAR ================= -->
+    <header class="bg-green-700 text-white shadow">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+            <!-- LOGO -->
+            <div class="text-2xl font-bold tracking-wide">
+                🌾 AgriDirect
+            </div>
+
+            <!-- NAV LINKS -->
+            <nav class="flex items-center space-x-6">
+
+                <!-- ================= FARMER NAV ================= -->
+                {% if session.get("role") == "farmer" %}
+                <a href="/farmer/dashboard"
+                    class="nav-link {% if request.path.startswith('/farmer/dashboard') %}active{% endif %}">
+                    Dashboard
+                </a>
+                <a href="/farmer/products"
+                    class="nav-link {% if request.path.startswith('/farmer/products') %}active{% endif %}">
+                    Products
+                </a>
+                <a href="/farmer/inventory"
+                    class="nav-link {% if request.path.startswith('/farmer/inventory') %}active{% endif %}">
+                    Inventory
+                </a>
+                <a href="/farmer/orders"
+                    class="nav-link {% if request.path.startswith('/farmer/orders') %}active{% endif %}">
+                    Orders
+                </a>
+                <a href="/farmer/transactions"
+                    class="nav-link {% if request.path.startswith('/farmer/transactions') %}active{% endif %}">
+                    Transactions
+                </a>
+                <a href="/complaints"
+                    class="nav-link {% if request.path.startswith('/farmer/complaints') %}active{% endif %}">
+                    Complaints
+                </a>
+                {% endif %}
+
+                <!-- ================= CUSTOMER NAV ================= -->
+                {% if session.get("role") == "customer" %}
+                <a href="/customer/dashboard"
+                    class="nav-link {% if request.path.startswith('/customer/dashboard') %}active{% endif %}">
+                    Dashboard
+                </a>
+
+                <a href="/customer/products"
+                    class="nav-link {% if request.path.startswith('/customer/products') %}active{% endif %}">
+                    Products
+                </a>
+                <a href="/customer/cart"
+                    class="nav-link {% if request.path.startswith('/customer/cart') %}active{% endif %}">
+                    Cart
+                </a>
+                <a href="/customer/orders"
+                    class="nav-link {% if request.path.startswith('/customer/orders') %}active{% endif %}">
+                    My Orders
+                </a>
+                <a href="/complaints"
+                    class="nav-link {% if request.path.startswith('/customer/complaints') %}active{% endif %}">
+                    Complaints
+                </a>
+                {% endif %}
+
+                <!-- ================= ADMIN NAV ================= -->
+                {% if session.get("role") == "admin" %}
+                <a href="/admin/dashboard"
+                    class="nav-link {% if request.path.startswith('/admin/dashboard') %}active{% endif %}">
+                    Dashboard
+                </a>
+                <a href="/admin/farmers"
+                    class="nav-link {% if request.path.startswith('/admin/farmers') %}active{% endif %}">
+                    Farmers
+                </a>
+                <a href="/admin/customers"
+                    class="nav-link {% if request.path.startswith('/admin/customers') %}active{% endif %}">
+                    Customers
+                </a>
+                <a href="/admin/orders"
+                    class="nav-link {% if request.path.startswith('/admin/orders') %}active{% endif %}">
+                    Orders
+                </a>
+                <a href="/admin/transactions"
+                    class="nav-link {% if request.path.startswith('/admin/transactions') %}active{% endif %}">
+                    Transactions
+                </a>
+                <a href="/admin/complaints"
+                    class="nav-link {% if request.path.startswith('/admin/complaints') %}active{% endif %}">
+                    Complaints
+                </a>
+                {% endif %}
+
+
+            </nav>
+
+            <!-- USER INFO -->
+            <div class="flex items-center space-x-4">
+                <!-- NOTIFICATIONS -->
+                <a href="/notifications" class="relative">
+
+                    🔔
+
+                    {% if unread_count > 0 %}
+                    <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs
+                 w-5 h-5 flex items-center justify-center rounded-full">
+                        {{ unread_count }}
+                    </span>
+                    {% endif %}
+                </a>
+
+                <span class="text-sm text-green-100">
+                    {{ session.get("role","").title() }}
+                </span>
+                <a href="/auth/logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-sm font-semibold">
+                    Logout
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ================= PAGE HEADER ================= -->
+    <div class="max-w-7xl mx-auto px-6 mt-6">
+        <h1 class="text-2xl font-bold text-gray-800">
+            {% block page_title %}{% endblock %}
+        </h1>
+    </div>
+
+    <!-- ================= CONTENT ================= -->
+    <main class="max-w-7xl mx-auto px-6 py-6">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- COMMON STYLES -->
+    <style>
+        .nav-link {
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .active {
+            background-color: rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+        }
+    </style>
+
+</body>
+
+</html>

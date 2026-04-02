@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Raise Complaint{% endblock %}
+{% block page_title %}Raise a Complaint{% endblock %}
+
+{% block content %}
+
+<div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow">
+
+    {% if request.args.get("success") %}
+    <div class="bg-green-100 text-green-700 p-3 rounded mb-4 text-center">
+        Complaint submitted successfully.
+    </div>
+    {% endif %}
+
+    <form method="POST" class="space-y-4">
+
+        <div>
+            <label class="block font-medium mb-1">Subject</label>
+            <input type="text" name="subject" required
+                class="w-full border rounded p-2 focus:outline-none focus:ring focus:ring-green-300">
+        </div>
+
+        <div>
+            <label class="block font-medium mb-1">Message</label>
+            <textarea name="message" rows="5" required
+                class="w-full border rounded p-2 focus:outline-none focus:ring focus:ring-green-300"></textarea>
+        </div>
+
+        <div class="flex justify-end">
+            <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded font-semibold">
+                Submit Complaint
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

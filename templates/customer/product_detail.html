@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Product Details{% endblock %}
+{% block page_title %}Product Details{% endblock %}
+
+{% block content %}
+<!-- FARMER PROFILE MODAL -->
+
+
+<div id="farmerModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+
+    <div class="bg-white p-6 rounded-xl w-full max-w-md shadow-lg">
+
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold text-green-700">
+                Farmer Profile
+            </h3>
+            <button onclick="closeFarmerModal()" class="text-gray-500 hover:text-black">
+                ✕
+            </button>
+        </div>
+
+        <div class="space-y-3 text-sm">
+
+            <div>
+                <p class="text-gray-500">Name</p>
+                <button onclick="openFarmerModal()" class="font-semibold text-green-700 hover:underline">
+                    {{ product.farmer_name }}
+                </button>
+
+            </div>
+
+            <div>
+                <p class="text-gray-500">Email</p>
+                <p class="font-semibold">{{ product.farmer_email }}</p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">Phone</p>
+                <p class="font-semibold">
+                    {{ product.farmer_phone or "Not provided" }}
+                </p>
+            </div>
+
+            <div>
+                <p class="text-gray-500">Joined On</p>
+                <p class="font-semibold">
+                    {{ product.farmer_joined.strftime("%d %b %Y") }}
+                </p>
+            </div>
+
+        </div>
+
+        <div class="mt-6 text-right">
+            <button onclick="closeFarmerModal()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+                Close
+            </button>
+        </div>
+
+    </div>
+</div>
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow">
+
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-green-700">
+            {{ product.title }}
+        </h2>
+
+        <a href="/customer/products" class="text-blue-600 hover:underline">
+            ← Back to Products
+        </a>
+    </div>
+
+    <!-- PRODUCT INFO -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+        <div>
+            <p class="text-gray-500">Farmer</p>
+            <button onclick="openFarmerModal()" class="font-semibold text-green-700 hover:underline">
+                {{ product.farmer_name }}
+            </button>
+
+        </div>
+
+        <div>
+            <p class="text-gray-500">Category</p>
+            <p class="font-semibold">{{ product.category }}</p>
+        </div>
+
+        <div>
+            <p class="text-gray-500">Price</p>
+            <p class="font-semibold text-green-700">₹{{ product.price }}</p>
+        </div>
+
+        <div>
+            <p class="text-gray-500">Rating</p>
+            <p class="text-yellow-500">
+                ⭐ {{ "%.1f"|format(product.avg_rating) }}
+            </p>
+        </div>
+
+        <div class="md:col-span-2">
+            <p class="text-gray-500">Description</p>
+            <p class="text-gray-700">
+                {{ product.description or "No description available." }}
+            </p>
+        </div>
+
+    </div>
+
+    <!-- ADD TO CART -->
+    <form method="POST" action="/customer/cart/add" class="flex gap-3 mb-6">
+        <input type="hidden" name="product_id" value="{{ product.id }}">
+        <input type="number" name="quantity" value="1" min="1" class="border p-2 w-24 rounded">
+
+        <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded">
+            Add to Cart
+        </button>
+    </form>
+
+    <!-- ADD REVIEW -->
+    <button onclick="openReview()" class="bg-black hover:bg-zinc-900 text-white font-semibold px-4 py-2 rounded mb-8">
+        Add Review
+    </button>
+
+    <!-- REVIEWS -->
+    <h3 class="text-xl font-bold mb-4">Customer Reviews</h3>
+
+    {% if reviews %}
+    <div class="space-y-4">
+        {% for r in reviews %}
+        <div class="border rounded p-4">
+            <p class="font-semibold">{{ r.customer_name }}</p>
+            <p class="text-yellow-500">⭐ {{ r.rating }}</p>
+            <p class="text-gray-700">{{ r.comment }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-gray-500">No reviews yet.</p>
+    {% endif %}
+
+</div>
+
+<!-- REVIEW MODAL -->
+<div id="reviewModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+
+    <div class="bg-white p-6 rounded-xl w-96 shadow-lg">
+        <h3 class="text-lg font-bold mb-4">Add Review</h3>
+
+        <form method="POST" action="/customer/review/add">
+            <input type="hidden" name="product_id" value="{{ product.id }}">
+
+            <select name="rating" required class="w-full border p-2 mb-2 rounded">
+                <option value="">Select Rating</option>
+                <option value="5">★★★★★</option>
+                <option value="4">★★★★</option>
+                <option value="3">★★★</option>
+                <option value="2">★★</option>
+                <option value="1">★</option>
+            </select>
+
+            <textarea name="comment" required placeholder="Write your review..."
+                class="w-full border p-2 mb-4 rounded"></textarea>
+
+            <div class="flex justify-end gap-2">
+                <button type="button" onclick="closeReview()" class="px-4 py-1 border rounded">
+                    Cancel
+                </button>
+
+                <button class="bg-green-600 text-white px-4 py-1 rounded">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openReview() {
+        document.getElementById("reviewModal").classList.remove("hidden");
+    }
+
+    function closeReview() {
+        document.getElementById("reviewModal").classList.add("hidden");
+    }
+
+</script>
+<script>
+    function openFarmerModal() {
+        document.getElementById("farmerModal").classList.remove("hidden");
+    }
+
+    function closeFarmerModal() {
+        document.getElementById("farmerModal").classList.add("hidden");
+    }
+</script>
+
+{% endblock %}
